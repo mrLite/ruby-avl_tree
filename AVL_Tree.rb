@@ -1,4 +1,3 @@
-# AVL-puu, eli tasapainotettu binäärihakupuu, johon voidaan tallettaa yksinkertaisia avaimia, kuten kokonaislukuja.
 require 'node'
 
 class AVLTree
@@ -157,9 +156,16 @@ class AVLTree
   alias_method :find, :search
   
   def to_a
-    @array = []
-    inorder_tree_walk
-    @array
+    array = []
+    self.each { |n| array << n.key }
+    array
+  end
+  
+  def each(node = @root)
+    return if node == nil
+    each(node.left) { |i| yield i }
+    yield node
+    each(node.right) { |i| yield i }
   end
   
   protected
@@ -206,13 +212,5 @@ class AVLTree
     y = x.left
     x.left = leftRotate(y)
     rightRotate(x)
-  end
-  
-  def inorder_tree_walk(x = @root)
-    unless x == nil
-      inorder_tree_walk(x.left)
-      @array << x.key
-      inorder_tree_walk(x.right)
-    end
   end
 end
