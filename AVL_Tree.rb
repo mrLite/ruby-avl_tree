@@ -74,8 +74,11 @@ class AVLTree
         parent = current
         if key < current.key
           current = current.left
-        else
+        elsif key > current.key
           current = current.right
+        else
+          puts "Tree already contains the key #{key}."
+          return
         end
       end
       uusi.parent = parent
