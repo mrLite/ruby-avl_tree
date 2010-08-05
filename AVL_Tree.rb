@@ -156,6 +156,12 @@ class AVLTree
   end
   alias_method :find, :search
   
+  def to_a
+    @array = []
+    inorder_tree_walk
+    @array
+  end
+  
   protected
   
   def rightRotate(x)
@@ -200,5 +206,13 @@ class AVLTree
     y = x.left
     x.left = leftRotate(y)
     rightRotate(x)
+  end
+  
+  def inorder_tree_walk(x = @root)
+    unless x == nil
+      inorder_tree_walk(x.left)
+      @array << x.key
+      inorder_tree_walk(x.right)
+    end
   end
 end
